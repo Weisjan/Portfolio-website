@@ -1,8 +1,34 @@
-import { useState } from "react";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Projects from "./pages/Projects";
+import Contact from "./pages/Contact";
+import "./index.css";
 
-export default function App() {
-  const [count, setCount] = useState(0);
-
-  return <div className="text-center bg-amber-400">Hello world!</div>;
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="projects" element={<Projects />} />
+          <Route path="contact" element={<Contact />} />
+          <Route
+            path="*"
+            element={
+              <div className="text-center py-12">
+                <h1 className="text-4xl font-bold text-primary-light">
+                  Page Not Found
+                </h1>
+              </div>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
+
+export default App;

@@ -1,1 +1,95 @@
 @import "tailwindcss";
+
+:root {
+  --primary: #1dcd9f; /* Purple-600 */
+  --primary-light: white; /* Purple-500 */
+  --primary-dark: #169976; /* Purple-700 */
+  --background: #222222; /* Gray-900 */
+  --background-light: #ffffff; /* Gray-800 */
+  --text: #f9fafb; /* Gray-50 */
+  --text-muted: #d1d5db; /* Gray-300 */
+}
+
+body {
+  font-family: "Electrolize", sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 1.5rem 0 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-light);
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary);
+}
+
+button {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Animation classes */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Add some breathing room to the content */
+.container {
+  padding-left: 12rem;
+  padding-right: 12rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 12rem;
+    padding-right: 12rem;
+  }
+}
+
+/* Make images responsive by default */
+img {
+  max-width: 100%;
+  height: auto;
+}
