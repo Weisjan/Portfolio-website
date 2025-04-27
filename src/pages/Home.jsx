@@ -1,11 +1,36 @@
 import { Link } from "react-router-dom";
+import Typewriter from "typewriter-effect";
 
 const Home = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <section className="text-center py-12">
-        <h1 className="text-5xl font-bold mb-6 text-emerald-600">
-          Software Deveoloper
+        <h1 className="text-5xl font-bold mb-6">
+          <Typewriter
+            options={{
+              strings: [],
+              autoStart: true,
+              loop: false,
+              html: true,
+            }}
+            onInit={(typewriter) => {
+              typewriter
+                .typeString(
+                  "Software <span class='text-emerald-400'>Developer</span>"
+                )
+                .pauseFor(1500)
+                .deleteAll()
+                .typeString(
+                  "Hello <span class='text-emerald-400'>World!</span>"
+                )
+                .pauseFor(1500)
+                .deleteAll()
+                .typeString(
+                  "Software <span class='text-emerald-400'>Developer</span>"
+                )
+                .start();
+            }}
+          />
         </h1>
         <p className="text-xl text-gray-300 mb-8">
           A creative developer's space to showcase projects and skills
