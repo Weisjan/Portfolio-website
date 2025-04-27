@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #1dcd9f; /* Purple-600 */
-  --primary-light: white; /* Purple-500 */
-  --primary-dark: #169976; /* Purple-700 */
-  --background: #222222; /* Gray-900 */
-  --background-light: #ffffff; /* Gray-800 */
-  --text: #f9fafb; /* Gray-50 */
-  --text-muted: #d1d5db; /* Gray-300 */
+  --primary: #00d492;
+  --primary-light: white;
+  --primary-dark: #009966;
+  --background: #222222;
+  --background-light: #ffffff;
+  --text: #f9fafb;
+  --text-muted: #d1d5db;
 }
 
 body {
@@ -61,7 +61,6 @@ button {
   background: var(--primary);
 }
 
-/* Animation classes */
 .fade-in {
   animation: fadeIn 0.5s ease-in;
 }
@@ -75,21 +74,9 @@ button {
   }
 }
 
-/* Add some breathing room to the content */
-.container {
-  padding-left: 12rem;
-  padding-right: 12rem;
-}
-
 @media (min-width: 640px) {
   .container {
     padding-left: 12rem;
     padding-right: 12rem;
   }
-}
-
-/* Make images responsive by default */
-img {
-  max-width: 100%;
-  height: auto;
 }
