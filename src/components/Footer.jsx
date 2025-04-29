@@ -1,15 +1,107 @@
+import { useEffect, useRef } from "react";
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    const width = (canvas.width = window.innerWidth);
+    const height = (canvas.height = 200);
+
+    const waveGradients = [
+      [
+        { offset: 0, color: "#059669" }, // Emerald 600
+        { offset: 0.1, color: "#047857" }, // Emerald 700
+        { offset: 1, color: "#111827" }, // Gray 900
+      ],
+      [
+        { offset: 0, color: "#10b981" }, // Emerald 500
+        { offset: 0.7, color: "#059669" }, // Emerald 600
+        { offset: 1, color: "#1f2937" }, // Gray 800
+      ],
+      [
+        { offset: 0, color: "#34d399" }, // Emerald 400
+        { offset: 0.6, color: "#10b981" }, // Emerald 500
+        { offset: 1, color: "#111827" }, // Gray 900
+      ],
+    ];
+
+    let phase = 0;
+
+    const waveData = [
+      { amplitude: 15, frequency: 0.008, speed: 0.03, opacity: 0.3 },
+      { amplitude: 10, frequency: 0.01, speed: 0.025, opacity: 0.25 },
+      { amplitude: 5, frequency: 0.013, speed: 0.02, opacity: 0.2 },
+    ];
+
+    const draw = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      waveData.forEach((wave, index) => {
+        ctx.beginPath();
+
+        const gradient = ctx.createLinearGradient(0, 0, 0, height);
+        waveGradients[index].forEach((gc) => {
+          gradient.addColorStop(gc.offset, gc.color);
+        });
+
+        ctx.moveTo(0, height);
+
+        for (let x = 0; x <= width; x++) {
+          const y =
+            Math.sin(x * wave.frequency + phase * wave.speed) * wave.amplitude;
+          const verticalOffset = 20 * index;
+          ctx.lineTo(x, height / 2 + y + verticalOffset);
+        }
+
+        ctx.lineTo(width, height);
+        ctx.lineTo(0, height);
+        ctx.closePath();
+
+        ctx.fillStyle = gradient;
+        ctx.globalAlpha = wave.opacity;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+
+      phase += 0.05;
+      requestAnimationFrame(draw);
+    };
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      draw();
+    };
+
+    window.addEventListener("resize", handleResize);
+    draw();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
-    <footer className="py-6">
-      <div className="container mx-auto px-4 text-center">
+    <footer className="relative py-6  overflow-hidden">
+      {/* Wave canvas background */}
+      <canvas
+        ref={canvasRef}
+        className="absolute bottom-0 left-0 w-full"
+        style={{ height: "180px", zIndex: 0 }}
+      />
+
+      {/* Footer content */}
+      <div className="container relative z-10 mx-auto px-4 text-center">
         <div className="flex justify-center space-x-6 mb-4">
           <a
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-300 hover:text-emerald-400"
+            className="text-gray-300 hover:text-emerald-400 transition-colors duration-300"
           >
             <span className="sr-only">GitHub</span>
             <svg
@@ -29,7 +121,7 @@ const Footer = () => {
             href="https://twitter.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-300 hover:text-emerald-400"
+            className="text-gray-300 hover:text-emerald-400 transition-colors duration-300"
           >
             <span className="sr-only">Twitter</span>
             <svg
@@ -45,7 +137,7 @@ const Footer = () => {
             href="https://linkedin.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-300 hover:text-emerald-400"
+            className="text-gray-300 hover:text-emerald-400 transition-colors duration-300"
           >
             <span className="sr-only">LinkedIn</span>
             <svg
