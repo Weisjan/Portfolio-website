@@ -98,7 +98,7 @@ const Footer = () => {
       <div className="container relative z-10 mx-auto px-4 text-center">
         <div className="flex justify-center space-x-6 mb-4">
           <a
-            href="https://github.com"
+            href="https://github.com/Weisjan"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-300 hover:text-emerald-400 transition-colors duration-300"
@@ -134,7 +134,7 @@ const Footer = () => {
             </svg>
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/jan-weis01/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-300 hover:text-emerald-400 transition-colors duration-300"
