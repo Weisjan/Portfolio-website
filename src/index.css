@@ -87,7 +87,8 @@ button {
 
 .animate-fadeIn {
   animation: fadeIn 0.3s ease-out;
-} */
+}
+*/
 @media (min-width: 640px) {
   .container {
     padding-left: 12rem;
