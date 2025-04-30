@@ -65,16 +65,6 @@ const ProjectsSection = () => {
             />
           ))}
         </div>
-
-        <div className="text-center mt-10 fade-up-element animation-delay-600">
-          <Link
-            to="/projects"
-            className="px-8 py-3 bg-gradient-to-r from-emerald-600 to-emerald-800 text-white font-mono uppercase tracking-wider rounded hover:from-emerald-500 hover:to-emerald-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-gray-900 relative overflow-hidden group"
-          >
-            <span className="relative z-10">View All Projects</span>
-            <span className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-emerald-600 opacity-0 group-hover:opacity-20 transition-opacity"></span>
-          </Link>
-        </div>
       </div>
 
       {/* Project Details Modal */}

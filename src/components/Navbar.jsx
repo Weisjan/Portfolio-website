@@ -39,7 +39,11 @@ const Navbar = () => {
           <Link to="/about" className={isActive()}>
             About
           </Link>
-          <Link to="/projects" className={isActive()}>
+          <Link
+            target="__blank"
+            to="https://github.com/Weisjan"
+            className={isActive()}
+          >
             GitHub
           </Link>
           <Link to="/contact" className={isActive()}>
