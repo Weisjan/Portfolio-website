@@ -98,7 +98,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Projects Section - Now imported as a component */}
+      {/* Projects Section */}
       <ProjectsSection />
     </main>
   );
