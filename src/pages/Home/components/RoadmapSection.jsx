@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CyberpunkRoadmap = () => {
+const RoadmapSection = () => {
   const [activePoint, setActivePoint] = useState(null);
   const [filter, setFilter] = useState("all");
 
@@ -13,7 +13,7 @@ const CyberpunkRoadmap = () => {
       completed: true,
       description: "Foundation of web development",
       skills: ["HTML5", "CSS3", "Responsive Design", "Flexbox/Grid"],
-      year: "2022 Q3",
+      year: "2020 Q3",
       category: "frontend",
       track: 1,
     },
@@ -40,7 +40,7 @@ const CyberpunkRoadmap = () => {
     {
       id: "typescript",
       title: "TypeScript",
-      completed: true,
+      completed: false,
       description: "Type-safe JavaScript",
       skills: ["Static Types", "Interfaces", "Generics", "Advanced Types"],
       year: "2024 Q1",
@@ -233,28 +233,42 @@ const CyberpunkRoadmap = () => {
     });
   });
 
+  // Calculate tooltip positioning for milestones near edges with expanded width
+  const getTooltipPosition = (xPosition) => {
+    // For milestones near the left edge
+    if (xPosition < 200) {
+      return { x: xPosition, align: "left" };
+    }
+    // For milestones near the right edge
+    else if (xPosition > 1000) {
+      return { x: xPosition - 260, align: "right" };
+    }
+    // For milestones in the middle
+    else {
+      return { x: xPosition - 130, align: "center" };
+    }
+  };
+
   return (
-    <section className="w-full overflow-hidden py-12 px-4" id="roadmap">
-      <div className="max-w-6xl mx-auto relative">
-        {/* Title with Cyberpunk style */}
+    <section className="w-full overflow-hidden py-12 px-0" id="roadmap">
+      <div className="w-full relative">
         <div className="relative mb-12 text-center">
-          <h2 className="text-5xl font-bold tracking-tighter text-emerald-400">
-            SKILL MATRIX
+          <h2 className="text-4xl font-bold mb-8 text-center text-emerald-400 fade-up-element">
+            Roadmap
           </h2>
-          <div className="h-1 w-32 bg-emerald-500 mx-auto mt-2 shadow-lg shadow-emerald-500/50"></div>
         </div>
 
         {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-3 mb-10 relative z-10">
+        <div className="flex flex-wrap justify-center gap-3 mb-5 relative z-10">
           <button
             onClick={() => setFilter("all")}
             className={`px-5 py-2 rounded border transition-all duration-300 ${
               filter === "all"
-                ? "bg-emerald-500/20 border-emerald-500 text-emerald-400 font-bold shadow-lg shadow-emerald-500/50"
+                ? " border border-emerald-400 rounded-md transition-colors duration-300"
                 : "bg-black border-gray-700 text-gray-300 hover:border-emerald-500"
             }`}
           >
-            ALL SYSTEMS
+            ALL
           </button>
           {Object.entries(categories).map(([key, category]) => (
             <button
@@ -262,7 +276,7 @@ const CyberpunkRoadmap = () => {
               onClick={() => setFilter(key)}
               className={`px-5 py-2 rounded border transition-all duration-300 ${
                 filter === key
-                  ? "bg-emerald-500/20 border-emerald-500 text-emerald-400 font-bold shadow-lg shadow-emerald-500/50"
+                  ? " border border-emerald-400 rounded-md transition-colors duration-300"
                   : "bg-black border-gray-700 text-gray-300 hover:border-emerald-500"
               }`}
             >
@@ -272,15 +286,15 @@ const CyberpunkRoadmap = () => {
         </div>
 
         {/* Roadmap SVG visualization */}
-        <div className="relative w-full mt-12 mb-8 h-96">
+        <div className="relative">
           <svg
             className="w-full h-full"
-            viewBox="0 0 1000 350"
+            viewBox="0 50 1200 550"
             preserveAspectRatio="xMidYMid meet"
           >
             {/* Render tracks */}
             {Object.keys(trackGroups).map((trackNum, trackIndex) => {
-              const trackY = 70 + trackIndex * 100;
+              const trackY = 200 + trackIndex * 150; // More space between tracks
               const milestones = trackGroups[trackNum];
               const totalMilestones = milestones.length;
               const completedCount = milestones.filter(
@@ -297,61 +311,46 @@ const CyberpunkRoadmap = () => {
 
               return (
                 <g key={`track-${trackNum}`}>
-                  {/* Background horizontal track line */}
+                  {/* Background horizontal track line - full width */}
                   <path
-                    d={`M50,${trackY} H950`}
-                    strokeWidth="6"
+                    d={`M50,${trackY} H1150`}
+                    strokeWidth="8"
                     stroke="#1a1a2e"
                     strokeLinecap="round"
                     fill="none"
                   />
 
-                  {/* Inner track line */}
+                  {/* Inner track line - full width */}
                   <path
-                    d={`M50,${trackY} H950`}
-                    strokeWidth="2"
+                    d={`M50,${trackY} H1150`}
+                    strokeWidth="3"
                     stroke="#2d2d44"
                     strokeLinecap="round"
                     fill="none"
                   />
 
-                  {/* Colored progress line with glow */}
+                  {/* Colored progress line with glow - adjusted for full width */}
                   <path
                     d={`M50,${trackY} H${
-                      50 + (900 * completionPercentage) / 100
+                      50 + (1100 * completionPercentage) / 100
                     }`}
-                    strokeWidth="2"
+                    strokeWidth="3"
                     stroke={trackColor}
                     strokeLinecap="round"
                     fill="none"
                     style={{
-                      filter: "drop-shadow(0 0 2px " + trackColor + ")",
+                      filter: "drop-shadow(0 0 3px " + trackColor + ")",
                     }}
                   />
 
-                  {/* Track labels - dynamic category name and completion percentage */}
-                  <text
-                    x="20"
-                    y={trackY + 5}
-                    className={`fill-${
-                      category === "frontend"
-                        ? "cyan"
-                        : category === "backend"
-                        ? "fuchsia"
-                        : "yellow"
-                    }-400`}
-                    style={{ fontSize: "12px", fontWeight: "bold" }}
-                    textAnchor="middle"
-                  >
-                    {categories[category].name.substring(0, 1)}
-                  </text>
-
                   {/* Milestone points */}
                   {milestones.map((milestone, index) => {
+                    // Spread across the SVG area
                     const xPosition =
-                      50 + (900 / (totalMilestones - 1 || 1)) * index;
+                      50 + (1100 / (totalMilestones - 1 || 1)) * index;
                     const categoryColor =
                       categories[milestone.category].trackColor;
+                    const tooltipPos = getTooltipPosition(xPosition);
 
                     return (
                       <g
@@ -364,17 +363,13 @@ const CyberpunkRoadmap = () => {
                         <circle
                           cx={xPosition}
                           cy={trackY}
-                          r="12"
-                          className={`${
-                            milestone.completed
-                              ? "fill-gray-900"
-                              : "fill-gray-900"
-                          }`}
+                          r="16"
+                          className="fill-gray-900"
                           stroke={categoryColor}
-                          strokeWidth="2"
+                          strokeWidth="3"
                           style={{
                             filter: milestone.completed
-                              ? `drop-shadow(0 0 3px ${categoryColor})`
+                              ? `drop-shadow(0 0 4px ${categoryColor})`
                               : "none",
                           }}
                         />
@@ -384,17 +379,17 @@ const CyberpunkRoadmap = () => {
                           <circle
                             cx={xPosition}
                             cy={trackY}
-                            r="5"
+                            r="7"
                             fill={categoryColor}
                             style={{
-                              filter: `drop-shadow(0 0 2px ${categoryColor})`,
+                              filter: `drop-shadow(0 0 3px ${categoryColor})`,
                             }}
                           />
                         ) : (
                           <circle
                             cx={xPosition}
                             cy={trackY}
-                            r="5"
+                            r="7"
                             className="fill-gray-800"
                             stroke={categoryColor}
                             strokeWidth="1"
@@ -404,98 +399,84 @@ const CyberpunkRoadmap = () => {
                         {/* Connection lines */}
                         {index < milestones.length - 1 && (
                           <line
-                            x1={xPosition + 12}
+                            x1={xPosition + 16}
                             y1={trackY}
                             x2={
                               xPosition +
-                              (900 / (totalMilestones - 1 || 1) - 12)
+                              (1100 / (totalMilestones - 1 || 1) - 16)
                             }
                             y2={trackY}
                             stroke={categoryColor}
-                            strokeWidth="1"
-                            strokeDasharray="4 2"
+                            strokeWidth="2"
+                            strokeDasharray="6 3"
                             opacity="0.6"
                           />
                         )}
 
-                        {/* Year marker */}
-                        <text
-                          x={xPosition}
-                          y={trackY - 20}
-                          textAnchor="middle"
-                          fill="#6b7280"
-                          style={{ fontSize: "8px" }}
-                        >
-                          {milestone.year}
-                        </text>
-
                         {/* Milestone title */}
                         <text
                           x={xPosition}
-                          y={trackY + 25}
+                          y={trackY + 35}
                           textAnchor="middle"
                           fill="#d1d5db"
                           style={{
-                            fontSize: "9px",
+                            fontSize: "14px",
                             fontWeight: milestone.completed ? "bold" : "normal",
                           }}
                         >
                           {milestone.title}
                         </text>
 
-                        {/* Cyberpunk tooltip display on hover */}
+                        {/* Tooltip display on hover */}
                         {activePoint === milestone.id && (
                           <foreignObject
-                            x={xPosition < 150 ? xPosition : xPosition - 120}
-                            y={trackY - 120}
-                            width="240"
-                            height="120"
+                            x={tooltipPos.x}
+                            y={trackY - 160}
+                            width="320"
+                            height="250"
+                            style={{ overflow: "auto" }}
                           >
                             <div
-                              className="bg-black p-3 rounded border-l-2 border-emerald-500 w-full h-full flex flex-col text-white overflow-visible relative"
+                              className="bg-black p-4 rounded border-l-4 border-emerald-500 w-full h-full flex flex-col text-white relative shadow-xl shadow-emerald-500/30 "
                               style={{
-                                fontSize: "10px",
-                                transform: xPosition < 150 ? "none" : "none",
+                                fontSize: "12px",
+                                zIndex: 100,
                               }}
                             >
-                              <div className="z-10">
-                                <div className="flex justify-between items-center mb-1">
-                                  <h4 className="font-bold text-sm text-emerald-400">
-                                    {milestone.title}
-                                  </h4>
-                                  <span className="text-gray-400 text-xs">
-                                    {milestone.year}
-                                  </span>
-                                </div>
+                              <div className="flex justify-between items-center mb-2">
+                                <h4 className="font-bold text-lg text-emerald-400">
+                                  {milestone.title}
+                                </h4>
+                              </div>
 
-                                <p className="mb-1 text-xs text-gray-300">
-                                  {milestone.description}
-                                </p>
+                              <p className="mb-2 text-sm text-gray-300">
+                                {milestone.description}
+                              </p>
 
-                                <div className="flex items-center gap-2 mb-2">
+                              <div className="flex items-center gap-2 mb-3">
+                                <span
+                                  className={`px-3 py-1 rounded text-sm font-bold ${
+                                    milestone.completed
+                                      ? "bg-emerald-900/60 text-emerald-300 border border-emerald-600"
+                                      : "bg-gray-800 text-gray-400 border border-gray-700"
+                                  }`}
+                                >
+                                  {milestone.completed ? "UNLOCKED" : "LOCKED"}
+                                </span>
+                              </div>
+
+                              <div className="grid grid-cols-2 gap-2">
+                                {milestone.skills.map((skill, i) => (
                                   <span
-                                    className={`px-2 py-0.5 rounded-sm text-xs ${
-                                      milestone.completed
-                                        ? "bg-emerald-900/50 text-emerald-300"
-                                        : "bg-gray-800 text-gray-400"
-                                    }`}
+                                    key={i}
+                                    className="text-sm text-gray-300 flex items-center"
                                   >
-                                    {milestone.completed
-                                      ? "UNLOCKED"
-                                      : "LOCKED"}
+                                    <span className="text-emerald-500 mr-1">
+                                      »
+                                    </span>{" "}
+                                    {skill}
                                   </span>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-1">
-                                  {milestone.skills.map((skill, i) => (
-                                    <span
-                                      key={i}
-                                      className="text-xs text-gray-400"
-                                    >
-                                      » {skill}
-                                    </span>
-                                  ))}
-                                </div>
+                                ))}
                               </div>
                             </div>
                           </foreignObject>
@@ -513,4 +494,4 @@ const CyberpunkRoadmap = () => {
   );
 };
 
-export default CyberpunkRoadmap;
+export default RoadmapSection;
