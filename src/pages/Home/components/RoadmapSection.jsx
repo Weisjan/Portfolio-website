@@ -192,7 +192,7 @@ const RoadmapSection = () => {
     () => ({
       frontend: {
         name: "Frontend",
-        trackColor: "#10b981", // Tailwind emerald-500
+        trackColor: "#10b981",
       },
       backend: {
         name: "Backend",
@@ -427,7 +427,6 @@ const RoadmapSection = () => {
 
       milestones.forEach((milestone, index) => {
         const xPosition = 50 + (1100 / (totalMilestones - 1 || 1)) * index;
-        const categoryColor = categories[milestone.category].trackColor;
         const tooltipPos = getTooltipPosition(xPosition, trackY);
 
         // Only render the tooltip if this milestone is active

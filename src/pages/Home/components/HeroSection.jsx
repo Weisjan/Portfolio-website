@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Typewriter from "typewriter-effect";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -12,6 +12,40 @@ const HeroSection = () => {
     "/home_images/3.jpg",
     "/home_images/4.jpg",
   ];
+
+  // Add automatic rotation through images
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % portfolioImages.length);
+    }, 5000); // Change image every 3 seconds
+
+    return () => clearInterval(interval); // Clean up on unmount
+  }, [portfolioImages.length]);
+
+  // Add floating animation effect
+  useEffect(() => {
+    if (!floatingContainerRef.current) return;
+
+    let animationFrameId;
+    const startTime = Date.now();
+
+    const animateFloat = () => {
+      const elapsedTime = (Date.now() - startTime) * 0.001;
+      const yOffset = Math.sin(elapsedTime) * 3;
+
+      if (floatingContainerRef.current) {
+        floatingContainerRef.current.style.transform = `translateY(${yOffset}px)`;
+      }
+
+      animationFrameId = requestAnimationFrame(animateFloat);
+    };
+
+    animationFrameId = requestAnimationFrame(animateFloat);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
 
   return (
     <section className="flex flex-col md:flex-row py-16 px-4 md:px-12 items-center justify-between">
@@ -45,7 +79,7 @@ const HeroSection = () => {
       {/* Floating Image Gallery */}
       <div
         ref={floatingContainerRef}
-        className="w-full md:w-2/5 h-80 md:h-96 relative rounded-lg overflow-hidden shadow-xl"
+        className="w-full md:w-2/5 h-80 md:h-96 relative rounded-lg overflow-hidden shadow-xl transition-transform duration-300 ease-in-out"
         aria-label="Portfolio showcase gallery"
       >
         <div className="relative w-full h-full">
