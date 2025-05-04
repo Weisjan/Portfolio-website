@@ -35,7 +35,7 @@ const ProjectsSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="mb-15 px-4 md:px-12 relative overflow-hidden fade-in-section"
+      className="mb-15 px-4 md:px-12 relative overflow-hidden fade-in-section "
     >
       <div className="relative z-10">
         <h2 className="text-4xl font-bold mb-8 text-center text-emerald-400 fade-up-element">

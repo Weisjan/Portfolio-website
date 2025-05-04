@@ -48,7 +48,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="flex flex-col md:flex-row py-16 px-4 md:px-12 items-center justify-between">
+    <section className="flex flex-col md:flex-row py-16 px-4 md:px-12 items-center justify-between flex-grow container mx-auto relative overflow-hidden">
       {/* Introduction Content */}
       <div className="w-full md:w-3/5 text-left mb-12 md:mb-0">
         <h1 className="text-5xl font-bold mb-6">
