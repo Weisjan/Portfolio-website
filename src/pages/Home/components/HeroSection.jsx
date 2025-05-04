@@ -48,7 +48,7 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="flex flex-col md:flex-row py-16 px-4 md:px-12 items-center justify-between flex-grow container mx-auto relative overflow-hidden">
+    <section className="flex flex-col md:flex-row px-5 md:mt-45 md:mb-30 md:px-12 items-center justify-between flex-grow container mx-auto relative overflow-hidden">
       {/* Introduction Content */}
       <div className="w-full md:w-3/5 text-left mb-12 md:mb-0">
         <h1 className="text-5xl font-bold mb-6">
@@ -79,14 +79,14 @@ const HeroSection = () => {
       {/* Floating Image Gallery */}
       <div
         ref={floatingContainerRef}
-        className="w-full md:w-2/5 h-80 md:h-96 relative rounded-lg overflow-hidden shadow-xl transition-transform duration-300 ease-in-out"
+        className="w-full md:w-2/5 h-80 md:h-96 relative rounded-lg overflow-hidden shadow-xl"
         aria-label="Portfolio showcase gallery"
       >
         <div className="relative w-full h-full">
           {portfolioImages.map((src, index) => (
             <div
               key={index}
-              className={`absolute inset-0 w-full h-full transition-all duration-1000 ease-in-out 
+              className={`absolute inset-0 transition-all duration-1000 ease-in-out 
               ${
                 activeIndex === index
                   ? "opacity-100 scale-105"

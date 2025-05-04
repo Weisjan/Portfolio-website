@@ -241,6 +241,7 @@ const RoadmapSection = () => {
     const completionPercentage =
       totalMilestones > 0 ? (completedCount / totalMilestones) * 100 : 0;
 
+    // Calculate vertical position for this track
     const trackY = 150 + trackIndex * dimensions.trackSpacing;
 
     // Get track color from the milestone category
@@ -284,7 +285,7 @@ const RoadmapSection = () => {
               onMouseEnter={() => handleMouseEnter(milestone.id)}
               onMouseLeave={handleMouseLeave}
             >
-              {/* Connection lines */}
+              {/* Connection lines (rendered first) */}
               {index < trackMilestones.length - 1 && (
                 <line
                   x1={xPosition + 16}
@@ -353,6 +354,10 @@ const RoadmapSection = () => {
     );
   };
 
+  /**
+   * Renders milestone tooltips at the top layer
+   * @returns {Array<JSX.Element>} - Tooltip SVG elements
+   */
   const renderTooltips = () => {
     const tooltips = [];
 
@@ -360,17 +365,20 @@ const RoadmapSection = () => {
       const trackMilestones = processedData[trackNum];
 
       trackMilestones.forEach((milestone, index) => {
+        // Only render the tooltip if this milestone is active
         if (activePoint === milestone.id) {
           let tooltipPos;
 
           if (isMobile) {
+            // Mobile positioning (vertical timeline)
             const trackX = 50 + trackIndex * dimensions.trackSpacing;
             const yPosition = 60 + index * dimensions.milestoneSpacing;
             tooltipPos = getTooltipPosition(trackX, yPosition);
           } else {
+            // Desktop positioning (horizontal timeline)
             const trackY = 150 + trackIndex * dimensions.trackSpacing;
             const xPosition =
-              50 + (1150 / (trackMilestones.length - 1 || 1)) * index;
+              50 + (1100 / (trackMilestones.length - 1 || 1)) * index;
             tooltipPos = getTooltipPosition(xPosition, trackY);
           }
 
@@ -379,8 +387,8 @@ const RoadmapSection = () => {
               key={`tooltip-${milestone.id}`}
               x={tooltipPos.x}
               y={tooltipPos.y}
-              width={isMobile ? "240" : "250"}
-              height="260"
+              width={isMobile ? "240" : "320"}
+              height="250"
               style={{ overflow: "visible", zIndex: 1000 }}
             >
               <div
@@ -392,12 +400,14 @@ const RoadmapSection = () => {
                   pointerEvents: "auto",
                 }}
                 onMouseEnter={() => {
+                  // Clear the timeout when mouse enters the tooltip
                   if (tooltipTimeoutRef.current) {
                     clearTimeout(tooltipTimeoutRef.current);
                     tooltipTimeoutRef.current = null;
                   }
                 }}
                 onMouseLeave={() => {
+                  // Hide tooltip when mouse leaves it
                   setActivePoint(null);
                 }}
               >
@@ -463,7 +473,7 @@ const RoadmapSection = () => {
 
   return (
     <section
-      className="overflow-hidden py-8 flex-grow p-50 mx-auto "
+      className="overflow-hidden py-8 flex-grow md:px-40 mx-auto "
       id="roadmap"
       ref={containerRef}
     >
