@@ -378,7 +378,7 @@ const RoadmapSection = () => {
             // Desktop positioning (horizontal timeline)
             const trackY = 150 + trackIndex * dimensions.trackSpacing;
             const xPosition =
-              50 + (1100 / (trackMilestones.length - 1 || 1)) * index;
+              50 + (1150 / (trackMilestones.length - 1 || 1)) * index;
             tooltipPos = getTooltipPosition(xPosition, trackY);
           }
 
@@ -387,7 +387,7 @@ const RoadmapSection = () => {
               key={`tooltip-${milestone.id}`}
               x={tooltipPos.x}
               y={tooltipPos.y}
-              width={isMobile ? "240" : "320"}
+              width={isMobile ? "240" : "250"}
               height="250"
               style={{ overflow: "visible", zIndex: 1000 }}
             >

@@ -13,15 +13,16 @@ const ProjectDetailsModal = ({ project, onClose, onImageClick }) => {
         className="bg-gray-900 border border-emerald-500/30 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto relative animate-fadeIn"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Corner elements */}
-        <div className="absolute top-0 left-0 w-32 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
-        <div className="absolute top-0 left-0 w-1 h-32 bg-gradient-to-b from-emerald-400 to-emerald-600"></div>
-        <div className="absolute top-0 right-0 w-32 h-1 bg-gradient-to-l from-emerald-400 to-emerald-600"></div>
-        <div className="absolute top-0 right-0 w-1 h-32 bg-gradient-to-b from-emerald-400 to-emerald-600"></div>
-        <div className="absolute bottom-0 left-0 w-32 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
-        <div className="absolute bottom-0 left-0 w-1 h-32 bg-gradient-to-t from-emerald-400 to-emerald-600"></div>
-        <div className="absolute bottom-0 right-0 w-32 h-1 bg-gradient-to-l from-emerald-400 to-emerald-600"></div>
-        <div className="absolute bottom-0 right-0 w-1 h-32 bg-gradient-to-t from-emerald-400 to-emerald-600"></div>
+        {/* Corner decorations that stay fixed to modal corners */}
+        <div className="sticky top-0 left-0 right-0 h-0 z-10 overflow-visible pointer-events-none">
+          {/* Top left */}
+          <div className="absolute top-0 left-0 w-16 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
+          <div className="absolute top-0 left-0 w-1 h-16 bg-gradient-to-b from-emerald-400 to-emerald-600"></div>
+
+          {/* Top right */}
+          <div className="absolute top-0 right-0 w-16 h-1 bg-gradient-to-l from-emerald-400 to-emerald-600"></div>
+          <div className="absolute top-0 right-0 w-1 h-16 bg-gradient-to-b from-emerald-400 to-emerald-600"></div>
+        </div>
 
         <div className="flex justify-between items-center p-6 border-b border-emerald-800/30">
           <h3 className="text-2xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">
@@ -154,6 +155,17 @@ const ProjectDetailsModal = ({ project, onClose, onImageClick }) => {
               View Source
             </a>
           </div>
+        </div>
+
+        {/* Bottom corner elements */}
+        <div className="sticky bottom-0 left-0 right-0 h-0 z-10 overflow-visible pointer-events-none">
+          {/* Bottom left */}
+          <div className="absolute bottom-0 left-0 w-16 h-1 bg-gradient-to-r from-emerald-400 to-emerald-600"></div>
+          <div className="absolute bottom-0 left-0 w-1 h-16 bg-gradient-to-t from-emerald-400 to-emerald-600"></div>
+
+          {/* Bottom right */}
+          <div className="absolute bottom-0 right-0 w-16 h-1 bg-gradient-to-l from-emerald-400 to-emerald-600"></div>
+          <div className="absolute bottom-0 right-0 w-1 h-16 bg-gradient-to-t from-emerald-400 to-emerald-600"></div>
         </div>
       </div>
     </div>

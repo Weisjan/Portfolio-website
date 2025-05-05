@@ -17,7 +17,7 @@ const HeroSection = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveIndex((prevIndex) => (prevIndex + 1) % portfolioImages.length);
-    }, 5000); // Change image every 3 seconds
+    }, 5000); // Change image every 5 seconds
 
     return () => clearInterval(interval); // Clean up on unmount
   }, [portfolioImages.length]);
@@ -48,9 +48,9 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="flex flex-col md:flex-row px-5 md:mt-45 md:mb-30 md:px-12 items-center justify-between flex-grow container mx-auto relative overflow-hidden">
+    <section className="flex flex-col md:flex-row px-5 md:mt-40 md:mb-35 md:px-12 items-center justify-between flex-grow container mx-auto relative overflow-hidden">
       {/* Introduction Content */}
-      <div className="w-full md:w-3/5 text-left mb-12 md:mb-0">
+      <div className="w-full md:w-1/2 text-left mb-12 md:mb-0">
         <h1 className="text-5xl font-bold mb-6">
           <Typewriter
             options={{
@@ -76,10 +76,10 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Floating Image Gallery */}
+      {/* Floating Image Gallery - Now Square and Larger */}
       <div
         ref={floatingContainerRef}
-        className="w-full md:w-2/5 h-80 md:h-96 relative rounded-lg overflow-hidden shadow-xl"
+        className="w-full md:w-2/5 aspect-square relative rounded-lg overflow-hidden shadow-xl"
         aria-label="Portfolio showcase gallery"
       >
         <div className="relative w-full h-full">
