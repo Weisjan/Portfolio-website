@@ -1,6 +1,7 @@
 import HeroSection from "./components/HeroSection";
 import RoadmapSection from "./components/RoadmapSection";
 import ProjectsSection from "./components/ProjectsSection";
+import AboutSection from "./components/AboutSection";
 
 const Home = () => {
   return (
@@ -13,6 +14,9 @@ const Home = () => {
 
       {/* Projects Section */}
       <ProjectsSection />
+
+      {/* About Section */}
+      <AboutSection />
     </main>
   );
 };

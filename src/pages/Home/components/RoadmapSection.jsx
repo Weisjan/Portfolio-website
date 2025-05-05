@@ -411,7 +411,7 @@ const RoadmapSection = () => {
                   setActivePoint(null);
                 }}
               >
-                <div className="flex justify-between items-center mb-2">
+                <div className="flex justify-between items-center">
                   <h4 className="font-bold text-lg text-emerald-400">
                     {milestone.title}
                   </h4>
@@ -459,7 +459,7 @@ const RoadmapSection = () => {
         <button
           key={key}
           onClick={() => setFilter(key)}
-          className={`px-4 py-2 rounded border text-sm transition-all duration-300 ${
+          className={`px-6 py-3 border border-emerald-400 rounded-md transition-colors duration-300  ${
             filter === key
               ? "border-emerald-400"
               : "bg-black border-gray-700 text-gray-300 hover:border-emerald-500"
