@@ -8,20 +8,30 @@ const quotesData = [
   },
   {
     quote:
-      "The future belongs to those who believe in the beauty of their dreams.",
-    author: "Eleanor Roosevelt",
+      "Everybody should learn to program a computer because it teaches you how to think.",
+    author: "Steve Jobs",
   },
   {
-    quote: "Technology is best when it brings people together.",
-    author: "Matt Mullenweg",
+    quote: "He who laughs most, learns best.",
+    author: "John Cleese",
   },
   {
-    quote: "In the digital world, we are the architects of our own reality.",
-    author: "Ada Lovelace",
+    quote: "Confusion is part of programming.",
+    author: "Felienne Hermans",
   },
   {
-    quote: "Code is poetry written for machines and humans alike.",
-    author: "Anonymous",
+    quote: "There is always one more bug to fix.",
+    author: "Ellen Ullman",
+  },
+  {
+    quote:
+      "Develop a passion for learning. If you do, you will never cease to grow.",
+    author: "Anthony J. D’Angelo",
+  },
+  {
+    quote:
+      "You don’t understand anything until you learn it more than one way.",
+    author: "Marvin Minsky",
   },
 ];
 
@@ -46,20 +56,40 @@ const AboutSection = () => {
           {/* Quote Container - Smaller side element */}
           <div className="w-full md:w-1/3 bg-gray-900/70 border border-emerald-500/30 rounded-lg p-3 backdrop-blur-sm shadow-md shadow-emerald-500/20">
             <div className="flex flex-col">
-              <div className="text-xl text-emerald-400 font-bold">"</div>
-              <p className="text-xl text-center text-white mb-2 ">
+              {/* Opening Quote SVG */}
+              <div className="w-6 h-6 text-emerald-400">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 60 60"
+                  fill="currentColor"
+                >
+                  <path d="M20 40c-4-6-6-10-6-18h8c0 4 2 8 4 10l-6 8zM36 40c-4-6-6-10-6-18h8c0 4 2 8 4 10l-6 8z" />
+                </svg>
+              </div>
+
+              <p className="text-xl text-center text-white mb-2">
                 {currentQuote.quote}
               </p>
-              <div className="flex justify-end">
+
+              <div className="flex justify-end items-center">
                 <p className="text-sm text-emerald-400 font-medium">
                   - {currentQuote.author}
                 </p>
-                <div className="text-xl text-emerald-400 font-bold ml-1 ">
-                  "
+
+                {/* Closing Quote SVG (mirrored or different icon) */}
+                <div className="w-6 h-6 text-emerald-400 ml-1">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 60 60"
+                    fill="currentColor"
+                  >
+                    <path d="M20 20c4 6 6 10 6 18h-8c0-4-2-8-4-10l6-8zM36 20c4 6 6 10 6 18h-8c0-4-2-8-4-10l6-8z" />
+                  </svg>
                 </div>
               </div>
             </div>
           </div>
+
           {/* Profile Container - Main content */}
           <div className="w-full md:w-2/3 flex flex-col md:flex-row items-center justify-end">
             <div className="relative mb-6 md:mb-0 md:mr-6">
