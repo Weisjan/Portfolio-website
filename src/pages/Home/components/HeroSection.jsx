@@ -69,7 +69,7 @@ const HeroSection = () => {
         <div className="flex flex-wrap justify-start gap-4">
           <Link
             to="/contact"
-            className="px-6 py-3 border border-emerald-400 rounded-md transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+            className="px-6 py-3 border border-emerald-400 rounded-md transition-colors duration-300"
           >
             Contact Me
           </Link>

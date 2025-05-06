@@ -1,8 +1,11 @@
-import { User } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const quotesData = [
-  { quote: "Persistence overrides resistance.", author: "Neo Cortex" },
+  {
+    quote: "Clean code always looks like it was written by someone who cares.",
+    author: "Robert C. Martin",
+  },
   {
     quote:
       "The future belongs to those who believe in the beauty of their dreams.",
@@ -23,93 +26,65 @@ const quotesData = [
 ];
 
 const AboutSection = () => {
-  const [glitchActive, setGlitchActive] = useState(false);
+  const navigate = useNavigate();
   const [currentQuote, setCurrentQuote] = useState(quotesData[0]);
 
-  // Function to select random quote
-  const getRandomQuote = () => {
-    const randomIndex = Math.floor(Math.random() * quotesData.length);
-    return quotesData[randomIndex];
-  };
-
-  // Set initial random quote on component mount
+  // Set random quote on component mount (page refresh)
   useEffect(() => {
-    setCurrentQuote(getRandomQuote());
+    const randomIndex = Math.floor(Math.random() * quotesData.length);
+    setCurrentQuote(quotesData[randomIndex]);
   }, []);
 
-  const triggerGlitch = () => {
-    setGlitchActive(true);
-    setTimeout(() => {
-      setGlitchActive(false);
-      // Change the quote when the glitch effect ends
-      setCurrentQuote(getRandomQuote());
-    }, 1000);
+  const handleNavigateToAbout = () => {
+    navigate("/about");
   };
 
   return (
-    <section className="w-full py-15 relative overflow-hidden">
-      <div className="container mx-auto z-10 relative px-4">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-          {/* Quote Container - Left side */}
-          <div className="w-full md:w-2/5 bg-gray-900/70 border border-emerald-500/30 rounded-xl px-6 py-2 backdrop-blur-sm shadow-lg shadow-emerald-500/20 relative">
-            <div
-              className={`transition-all duration-300 flex flex-col h-full justify-between ${
-                glitchActive ? "translate-x-1" : ""
-              }`}
-            >
-              <div className="text-3xl text-emerald-400 mb-2 font-bold">"</div>
-              <div className="flex-grow flex items-center justify-center">
-                <p className="text-lg md:text-xl font-medium text-emerald-100 text-center relative">
-                  <span
-                    className={`relative z-10 ${
-                      glitchActive
-                        ? "before:content-[''] before:absolute before:text-rose-500 before:left-0.5 before:top-0.5 before:opacity-70 before:z-0"
-                        : ""
-                    }`}
-                  >
-                    {currentQuote.quote}
-                  </span>
-                </p>
-              </div>
-              <div className="mt-4 flex flex-col items-end">
-                <p className="text-emerald-400 font-medium">
+    <section className="w-full py-12 relative overflow-hidden">
+      <div className="container mx-auto z-10 relative ">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-10">
+          {/* Quote Container - Smaller side element */}
+          <div className="w-full md:w-1/3 bg-gray-900/70 border border-emerald-500/30 rounded-lg p-3 backdrop-blur-sm shadow-md shadow-emerald-500/20">
+            <div className="flex flex-col">
+              <div className="text-xl text-emerald-400 font-bold">"</div>
+              <p className="text-xl text-center text-white mb-2 ">
+                {currentQuote.quote}
+              </p>
+              <div className="flex justify-end">
+                <p className="text-sm text-emerald-400 font-medium">
                   - {currentQuote.author}
                 </p>
-                <div className="text-3xl text-emerald-400 font-bold">"</div>
+                <div className="text-xl text-emerald-400 font-bold ml-1 ">
+                  "
+                </div>
               </div>
             </div>
-
-            {/* Decorative elements */}
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-emerald-500 rounded-tl-lg"></div>
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-emerald-500 rounded-br-lg"></div>
           </div>
-
-          {/* Profile Container - Right side */}
-          <div className="w-full md:w-1/2 flex flex-col md:flex-row items-center justify-center md:justify-end md:pl-8">
+          {/* Profile Container - Main content */}
+          <div className="w-full md:w-2/3 flex flex-col md:flex-row items-center justify-end">
             <div className="relative mb-6 md:mb-0 md:mr-6">
-              <div className="w-40 h-40 rounded-full bg-gradient-to-br from-emerald-900 to-teal-600 flex items-center justify-center overflow-hidden border-4 border-emerald-500/50 shadow-lg shadow-emerald-500/30">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-400/10 to-transparent animate-pulse"></div>
-                <User
-                  className="w-20 h-20 text-emerald-200"
-                  strokeWidth={1.5}
+              <div className="w-50 h-50 rounded-full overflow-hidden  shadow-md">
+                <img
+                  src="../home_images/avatar.jpg"
+                  alt="Profile"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </div>
 
             <div className="text-center md:text-left">
-              <h2 className="text-2xl font-bold text-emerald-300 mb-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-emerald-400">
                 More about me
               </h2>
-              <p className="text-emerald-100 mb-4">
-                Click the button below for a new quote.
+              <p className="text-white mb-4">
+                Click the button below to read more.
               </p>
 
               <button
-                onClick={triggerGlitch}
-                className="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-md relative overflow-hidden transition-all duration-300 shadow-lg shadow-emerald-500/30 hover:shadow-emerald-400/40 group"
+                onClick={handleNavigateToAbout}
+                className="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-md transition-all duration-300 shadow-md hover:shadow-lg group"
               >
-                <span className="relative z-10">New Quote</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-300/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                <span className="relative z-10">View Profile</span>
               </button>
             </div>
           </div>
