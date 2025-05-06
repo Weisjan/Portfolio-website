@@ -76,8 +76,6 @@ const RoadmapSection = () => {
     setActivePoint(id);
   };
 
-  /**
-   */
   const handleMouseLeave = () => {
     tooltipTimeoutRef.current = setTimeout(() => {
       setActivePoint(null);
@@ -354,10 +352,6 @@ const RoadmapSection = () => {
     );
   };
 
-  /**
-   * Renders milestone tooltips at the top layer
-   * @returns {Array<JSX.Element>} - Tooltip SVG elements
-   */
   const renderTooltips = () => {
     const tooltips = [];
 

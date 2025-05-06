@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const quotesData = [
   {
@@ -36,7 +36,6 @@ const quotesData = [
 ];
 
 const AboutSection = () => {
-  const navigate = useNavigate();
   const [currentQuote, setCurrentQuote] = useState(quotesData[0]);
 
   // Set random quote on component mount (page refresh)
@@ -45,18 +44,13 @@ const AboutSection = () => {
     setCurrentQuote(quotesData[randomIndex]);
   }, []);
 
-  const handleNavigateToAbout = () => {
-    navigate("/about");
-  };
-
   return (
     <section className="w-full py-12 relative overflow-hidden">
       <div className="container mx-auto z-10 relative ">
         <div className="flex flex-col md:flex-row items-center justify-center gap-10">
-          {/* Quote Container - Smaller side element */}
-          <div className="w-full md:w-1/3 bg-gray-900/70 border border-emerald-500/30 rounded-lg p-3 backdrop-blur-sm shadow-md shadow-emerald-500/20">
+          {/* Quote Container */}
+          <div className="w-full md:w-1/3 bg-gray-900/70 border border-emerald-500/30 rounded-4xl p-3 backdrop-blur-sm shadow-md shadow-emerald-500/20">
             <div className="flex flex-col">
-              {/* Opening Quote SVG */}
               <div className="w-6 h-6 text-emerald-400">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +70,6 @@ const AboutSection = () => {
                   - {currentQuote.author}
                 </p>
 
-                {/* Closing Quote SVG (mirrored or different icon) */}
                 <div className="w-6 h-6 text-emerald-400 ml-1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +86,7 @@ const AboutSection = () => {
           {/* Profile Container - Main content */}
           <div className="w-full md:w-2/3 flex flex-col md:flex-row items-center justify-end">
             <div className="relative mb-6 md:mb-0 md:mr-6">
-              <div className="w-50 h-50 rounded-full overflow-hidden  shadow-md">
+              <div className="w-50 h-50 rounded-full overflow-hidden shadow-md">
                 <img
                   src="../home_images/avatar.jpg"
                   alt="Profile"
@@ -110,12 +103,14 @@ const AboutSection = () => {
                 Click the button below to read more.
               </p>
 
-              <button
-                onClick={handleNavigateToAbout}
-                className="px-6 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-md transition-all duration-300 shadow-md hover:shadow-lg group"
-              >
-                <span className="relative z-10">View Profile</span>
-              </button>
+              <div className="flex flex-wrap justify-start gap-4">
+                <Link
+                  to="/about"
+                  className="px-6 py-3 border border-emerald-400 rounded-md transition-colors duration-300"
+                >
+                  About Me
+                </Link>
+              </div>
             </div>
           </div>
         </div>

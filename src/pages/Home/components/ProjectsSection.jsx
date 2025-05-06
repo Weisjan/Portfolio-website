@@ -35,14 +35,14 @@ const ProjectsSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="mb-15 px-5 md:px-12 relative overflow-hidden fade-in-section "
+      className="mb-15 px-5 md:px-12 relative overflow-hidden "
     >
       <div className="relative z-10">
-        <h2 className="text-4xl font-bold mb-8 text-center text-emerald-400 fade-up-element">
+        <h2 className="text-4xl font-bold mb-8 text-center text-emerald-400 ">
           Latest Projects
         </h2>
 
-        <p className="text-xl text-center text-white mb-8 fade-up-element animation-delay-200">
+        <p className="text-xl text-center text-white mb-8  ">
           Visit my{" "}
           <a
             target="_blank"

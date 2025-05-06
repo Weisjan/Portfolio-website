@@ -5,18 +5,24 @@ import AboutSection from "./components/AboutSection";
 
 const Home = () => {
   return (
-    <main className="text-white">
-      {/* Hero Section - Extracted to separate component */}
-      <HeroSection />
+    <main className="text-white transition-all duration-500 ease-in-out">
+      <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="transition-all duration-500">
+          <HeroSection />
+        </div>
 
-      {/* Roadmap Section - New component */}
-      <RoadmapSection />
+        <div className="transition-all duration-500">
+          <RoadmapSection />
+        </div>
 
-      {/* Projects Section */}
-      <ProjectsSection />
+        <div className="transition-all duration-500">
+          <ProjectsSection />
+        </div>
 
-      {/* About Section */}
-      <AboutSection />
+        <div className="transition-all duration-500">
+          <AboutSection />
+        </div>
+      </div>
     </main>
   );
 };
