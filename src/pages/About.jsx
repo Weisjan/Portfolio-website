@@ -10,19 +10,16 @@ import {
   BookOpen,
   Award,
   GitBranch,
-  Github,
-  Twitter,
-  Linkedin,
 } from "lucide-react";
 
-const CyberpunkAbout = () => {
+const About = () => {
   const [activeSection, setActiveSection] = useState("profile");
   const [glitchText, setGlitchText] = useState("");
   const [typedBio, setTypedBio] = useState("");
   const [typeIndex, setTypeIndex] = useState(0);
 
   const fullBio =
-    "I'm a passionate software developer with 2+ years of experience creating engaging digital experiences. I specialize in building modern web applications using React, Node.js, and related technologies. Based in Gdańsk, I enjoy turning complex problems into simple, beautiful, and intuitive solutions. When I'm not coding, you can find me at rock concerts, playing chess, or experimenting with new recipes.";
+    "I'm a passionate software engineer with 2+ years of experience creating engaging digital experiences. I specialize in building modern web applications using React, Node.js, and related technologies. Based in Gdańsk, I enjoy turning complex problems into simple, beautiful, and intuitive solutions. When I'm not coding, you can find me at rock concerts, playing chess, or experimenting with new recipes.";
 
   // Glitch effect
   useEffect(() => {
@@ -87,8 +84,7 @@ const CyberpunkAbout = () => {
     },
     {
       title: "Professional Career",
-      description:
-        "Gained hands on experience working as a software developer.",
+      description: "Gained hands on experience working as a software engineer.",
       icon: <Award className="text-emerald-400" />,
     },
   ];
@@ -122,7 +118,7 @@ const CyberpunkAbout = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto bg-black bg-opacity-80 text-emerald-300 p-6 rounded-lg border border-emerald-500 shadow-lg shadow-emerald-500/30 flex flex-col">
+    <div className="max-w-4xl bg-black bg-opacity-80 text-emerald-300 p-6 m-11 mx-5 md:mx-auto rounded-lg border border-emerald-500 shadow-lg shadow-emerald-500/30 flex flex-col">
       <div className="mb-8 flex justify-between items-center">
         <h1 className="text-4xl font-bold glitch-text relative">
           <span className="text-emerald-500">ABOUT</span>
@@ -308,34 +304,8 @@ const CyberpunkAbout = () => {
           })}
         </div>
       </div>
-
-      {/* Social links */}
-      <div className="w-full flex justify-center gap-6 mt-4 py-4 border-t border-emerald-900">
-        <a
-          href="#"
-          className="text-emerald-500 hover:text-emerald-300 transition-colors"
-        >
-          <Github size={24} />
-        </a>
-        <a
-          href="#"
-          className="text-emerald-500 hover:text-emerald-300 transition-colors"
-        >
-          <Twitter size={24} />
-        </a>
-        <a
-          href="#"
-          className="text-emerald-500 hover:text-emerald-300 transition-colors"
-        >
-          <Linkedin size={24} />
-        </a>
-      </div>
-
-      <div className="text-center text-xs text-emerald-700 mt-2">
-        © {new Date().getFullYear()} All rights reserved.
-      </div>
     </div>
   );
 };
 
-export default CyberpunkAbout;
+export default About;
