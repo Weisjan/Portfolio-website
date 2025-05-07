@@ -103,7 +103,7 @@ const AboutSection = () => {
                 Click the button below to read more.
               </p>
 
-              <div className="flex flex-wrap justify-start gap-4">
+              <div className="flex flex-wrap justify-center md:justify-start gap-4">
                 <Link
                   to="/about"
                   className="px-6 py-3 border border-emerald-400 rounded-md transition-colors duration-300"
