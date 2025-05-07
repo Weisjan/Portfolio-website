@@ -9,7 +9,7 @@ const Layout = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <AnimatedGradientBackground />
+      {/* <AnimatedGradientBackground /> */}
       <Navbar />
       <main className="z-10 relative">
         <AnimatePresence mode="wait">
