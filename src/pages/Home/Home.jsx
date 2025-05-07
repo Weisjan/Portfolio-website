@@ -11,9 +11,9 @@ const Home = () => {
           <HeroSection />
         </div>
 
-        <div className="transition-all duration-500">
+        {/* <div className="transition-all duration-500">
           <RoadmapSection />
-        </div>
+        </div> */}
 
         <div className="transition-all duration-500">
           <ProjectsSection />
