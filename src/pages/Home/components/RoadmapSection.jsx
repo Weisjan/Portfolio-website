@@ -5,7 +5,12 @@ const RoadmapSection = () => {
   const [activePoint, setActivePoint] = useState(null);
   const [filter, setFilter] = useState("frontend");
   const [isMobile, setIsMobile] = useState(false);
+  const [tooltipAnimation, setTooltipAnimation] = useState({
+    id: null,
+    state: "hidden", // 'hidden', 'entering', 'visible', 'exiting'
+  });
   const tooltipTimeoutRef = useRef(null);
+  const animationTimeoutRef = useRef(null);
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -19,6 +24,46 @@ const RoadmapSection = () => {
 
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  useEffect(() => {
+    if (activePoint) {
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+
+      setTooltipAnimation({
+        id: activePoint,
+        state: "entering",
+      });
+
+      animationTimeoutRef.current = setTimeout(() => {
+        setTooltipAnimation({
+          id: activePoint,
+          state: "visible",
+        });
+      }, 50);
+    } else {
+      if (tooltipAnimation.id) {
+        setTooltipAnimation((prev) => ({
+          id: prev.id,
+          state: "exiting",
+        }));
+
+        animationTimeoutRef.current = setTimeout(() => {
+          setTooltipAnimation({
+            id: null,
+            state: "hidden",
+          });
+        }, 300);
+      }
+    }
+
+    return () => {
+      if (animationTimeoutRef.current) {
+        clearTimeout(animationTimeoutRef.current);
+      }
+    };
+  }, [activePoint]);
 
   const processedData = useMemo(() => {
     const filteredMilestones = milestones.filter((m) => m.category === filter);
@@ -79,7 +124,7 @@ const RoadmapSection = () => {
   const handleMouseLeave = () => {
     tooltipTimeoutRef.current = setTimeout(() => {
       setActivePoint(null);
-    }, 300);
+    }, 100);
   };
 
   const getTooltipPosition = (x, y) => {
@@ -169,13 +214,21 @@ const RoadmapSection = () => {
         {/* Render each milestone node */}
         {trackMilestones.map((milestone, index) => {
           const yPosition = 60 + index * dimensions.milestoneSpacing;
+          const isActive = activePoint === milestone.id;
 
           return (
             <g
               key={milestone.id}
-              className="cursor-pointer"
+              className={`cursor-pointer transition-transform duration-300 ${
+                isActive ? "scale-110" : ""
+              }`}
               onMouseEnter={() => handleMouseEnter(milestone.id)}
               onMouseLeave={handleMouseLeave}
+              style={{
+                transform: isActive ? "scale(1.1)" : "scale(1)",
+                transformOrigin: `${trackX}px ${yPosition}px`,
+                transition: "transform 0.3s ease-out",
+              }}
             >
               {/* Milestone circle */}
               <circle
@@ -188,7 +241,10 @@ const RoadmapSection = () => {
                 style={{
                   filter: milestone.completed
                     ? `drop-shadow(0 0 4px ${trackColor})`
+                    : isActive
+                    ? `drop-shadow(0 0 6px ${trackColor})`
                     : "none",
+                  transition: "filter 0.3s ease-out",
                 }}
               />
 
@@ -199,7 +255,12 @@ const RoadmapSection = () => {
                   cy={yPosition}
                   r="7"
                   fill={trackColor}
-                  style={{ filter: `drop-shadow(0 0 3px ${trackColor})` }}
+                  style={{
+                    filter: `drop-shadow(0 0 ${
+                      isActive ? "5" : "3"
+                    }px ${trackColor})`,
+                    transition: "filter 0.3s ease-out",
+                  }}
                 />
               ) : (
                 <circle
@@ -209,6 +270,9 @@ const RoadmapSection = () => {
                   className="fill-gray-800"
                   stroke={trackColor}
                   strokeWidth="1"
+                  style={{
+                    transition: "fill 0.3s ease-out",
+                  }}
                 />
               )}
 
@@ -217,10 +281,12 @@ const RoadmapSection = () => {
                 x={trackX + 25}
                 y={yPosition + 5}
                 textAnchor="start"
-                fill="#d1d5db"
+                fill={isActive ? "#ffffff" : "#d1d5db"}
                 style={{
                   fontSize: "14px",
-                  fontWeight: milestone.completed ? "bold" : "normal",
+                  fontWeight:
+                    milestone.completed || isActive ? "bold" : "normal",
+                  transition: "fill 0.3s ease-out",
                 }}
               >
                 {milestone.title}
@@ -239,10 +305,8 @@ const RoadmapSection = () => {
     const completionPercentage =
       totalMilestones > 0 ? (completedCount / totalMilestones) * 100 : 0;
 
-    // Calculate vertical position for this track
     const trackY = 150 + trackIndex * dimensions.trackSpacing;
 
-    // Get track color from the milestone category
     const category = trackMilestones[0]?.category || "frontend";
     const trackColor = categories[category].trackColor;
 
@@ -275,6 +339,7 @@ const RoadmapSection = () => {
         {/* Milestone points */}
         {trackMilestones.map((milestone, index) => {
           const xPosition = 50 + (1100 / (totalMilestones - 1 || 1)) * index;
+          const isActive = activePoint === milestone.id;
 
           return (
             <g
@@ -282,8 +347,13 @@ const RoadmapSection = () => {
               className="cursor-pointer"
               onMouseEnter={() => handleMouseEnter(milestone.id)}
               onMouseLeave={handleMouseLeave}
+              style={{
+                transform: isActive ? "scale(1.1)" : "scale(1)",
+                transformOrigin: `${xPosition}px ${trackY}px`,
+                transition: "transform 0.3s ease-out",
+              }}
             >
-              {/* Connection lines (rendered first) */}
+              {/* Connection lines */}
               {index < trackMilestones.length - 1 && (
                 <line
                   x1={xPosition + 16}
@@ -293,7 +363,8 @@ const RoadmapSection = () => {
                   stroke={trackColor}
                   strokeWidth="2"
                   strokeDasharray="6 3"
-                  opacity="0.6"
+                  opacity={isActive ? "0.8" : "0.6"}
+                  style={{ transition: "opacity 0.3s ease-out" }}
                 />
               )}
 
@@ -306,9 +377,13 @@ const RoadmapSection = () => {
                 stroke={trackColor}
                 strokeWidth="3"
                 style={{
-                  filter: milestone.completed
-                    ? `drop-shadow(0 0 4px ${trackColor})`
-                    : "none",
+                  filter:
+                    milestone.completed || isActive
+                      ? `drop-shadow(0 0 ${
+                          isActive ? "6" : "4"
+                        }px ${trackColor})`
+                      : "none",
+                  transition: "filter 0.3s ease-out",
                 }}
               />
 
@@ -319,7 +394,12 @@ const RoadmapSection = () => {
                   cy={trackY}
                   r="7"
                   fill={trackColor}
-                  style={{ filter: `drop-shadow(0 0 3px ${trackColor})` }}
+                  style={{
+                    filter: `drop-shadow(0 0 ${
+                      isActive ? "5" : "3"
+                    }px ${trackColor})`,
+                    transition: "filter 0.3s ease-out",
+                  }}
                 />
               ) : (
                 <circle
@@ -337,10 +417,12 @@ const RoadmapSection = () => {
                 x={xPosition}
                 y={trackY + 35}
                 textAnchor="middle"
-                fill="#d1d5db"
+                fill={isActive ? "#ffffff" : "#d1d5db"}
                 style={{
                   fontSize: "14px",
-                  fontWeight: milestone.completed ? "bold" : "normal",
+                  fontWeight:
+                    milestone.completed || isActive ? "bold" : "normal",
+                  transition: "fill 0.3s ease-out",
                 }}
               >
                 {milestone.title}
@@ -355,94 +437,123 @@ const RoadmapSection = () => {
   const renderTooltips = () => {
     const tooltips = [];
 
-    Object.keys(processedData).forEach((trackNum, trackIndex) => {
-      const trackMilestones = processedData[trackNum];
+    if (tooltipAnimation.id) {
+      Object.keys(processedData).forEach((trackNum, trackIndex) => {
+        const trackMilestones = processedData[trackNum];
 
-      trackMilestones.forEach((milestone, index) => {
-        // Only render the tooltip if this milestone is active
-        if (activePoint === milestone.id) {
-          let tooltipPos;
+        trackMilestones.forEach((milestone, index) => {
+          if (tooltipAnimation.id === milestone.id) {
+            let tooltipPos;
 
-          if (isMobile) {
-            // Mobile positioning (vertical timeline)
-            const trackX = 50 + trackIndex * dimensions.trackSpacing;
-            const yPosition = 60 + index * dimensions.milestoneSpacing;
-            tooltipPos = getTooltipPosition(trackX, yPosition);
-          } else {
-            // Desktop positioning (horizontal timeline)
-            const trackY = 150 + trackIndex * dimensions.trackSpacing;
-            const xPosition =
-              50 + (1150 / (trackMilestones.length - 1 || 1)) * index;
-            tooltipPos = getTooltipPosition(xPosition, trackY);
-          }
+            if (isMobile) {
+              const trackX = 50 + trackIndex * dimensions.trackSpacing;
+              const yPosition = 60 + index * dimensions.milestoneSpacing;
+              tooltipPos = getTooltipPosition(trackX, yPosition);
+            } else {
+              const trackY = 150 + trackIndex * dimensions.trackSpacing;
+              const xPosition =
+                50 + (1150 / (trackMilestones.length - 1 || 1)) * index;
+              tooltipPos = getTooltipPosition(xPosition, trackY);
+            }
 
-          tooltips.push(
-            <foreignObject
-              key={`tooltip-${milestone.id}`}
-              x={tooltipPos.x}
-              y={tooltipPos.y}
-              width={isMobile ? "240" : "250"}
-              height="250"
-              style={{ overflow: "visible", zIndex: 1000 }}
-            >
-              <div
-                className="bg-black p-4 rounded border-l-4 border-emerald-500 w-full h-full flex flex-col text-white relative shadow-xl shadow-emerald-500/30"
-                style={{
-                  fontSize: "12px",
-                  zIndex: 1000,
-                  position: "relative",
-                  pointerEvents: "auto",
-                }}
-                onMouseEnter={() => {
-                  // Clear the timeout when mouse enters the tooltip
-                  if (tooltipTimeoutRef.current) {
-                    clearTimeout(tooltipTimeoutRef.current);
-                    tooltipTimeoutRef.current = null;
-                  }
-                }}
-                onMouseLeave={() => {
-                  // Hide tooltip when mouse leaves it
-                  setActivePoint(null);
-                }}
+            let animationStyles = {};
+            switch (tooltipAnimation.state) {
+              case "entering":
+                animationStyles = {
+                  opacity: 0,
+                  transform: "scale(0.9) translateY(10px)",
+                };
+                break;
+              case "visible":
+                animationStyles = {
+                  opacity: 1,
+                  transform: "scale(1) translateY(0)",
+                };
+                break;
+              case "exiting":
+                animationStyles = {
+                  opacity: 0,
+                  transform: "scale(0.95) translateY(5px)",
+                };
+                break;
+              default:
+                animationStyles = {
+                  opacity: 0,
+                  transform: "scale(0.9) translateY(10px)",
+                };
+            }
+
+            tooltips.push(
+              <foreignObject
+                key={`tooltip-${milestone.id}`}
+                x={tooltipPos.x}
+                y={tooltipPos.y}
+                width={isMobile ? "240" : "250"}
+                height="250"
+                style={{ overflow: "visible", zIndex: 1000 }}
               >
-                <div className="flex justify-between items-center">
-                  <h4 className="font-bold text-lg text-emerald-400">
-                    {milestone.title}
-                  </h4>
-                </div>
+                <div
+                  className="bg-black p-4 rounded border-l-4 border-emerald-500 w-full h-full flex flex-col text-white relative shadow-xl shadow-emerald-500/30"
+                  style={{
+                    fontSize: "12px",
+                    zIndex: 1000,
+                    position: "relative",
+                    pointerEvents: "auto",
+                    transition:
+                      "opacity 0.3s ease-out, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                    ...animationStyles,
+                  }}
+                  onMouseEnter={() => {
+                    // Clear the timeout when mouse enters the tooltip
+                    if (tooltipTimeoutRef.current) {
+                      clearTimeout(tooltipTimeoutRef.current);
+                      tooltipTimeoutRef.current = null;
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    // Hide tooltip when mouse leaves it
+                    setActivePoint(null);
+                  }}
+                >
+                  <div className="flex justify-between items-center">
+                    <h4 className="font-bold text-lg text-emerald-400">
+                      {milestone.title}
+                    </h4>
+                  </div>
 
-                <p className="mb-2 text-sm text-gray-300">
-                  {milestone.description}
-                </p>
+                  <p className="mb-2 text-sm text-gray-300">
+                    {milestone.description}
+                  </p>
 
-                <div className="flex items-center gap-2 mb-3">
-                  <span
-                    className={`px-3 py-1 rounded text-sm font-bold ${
-                      milestone.completed
-                        ? "bg-emerald-900/60 text-emerald-300 border border-emerald-600"
-                        : "bg-gray-800 text-gray-400 border border-gray-700"
-                    }`}
-                  >
-                    {milestone.completed ? "UNLOCKED" : "LOCKED"}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2">
-                  {milestone.skills.map((skill, i) => (
+                  <div className="flex items-center gap-2 mb-3">
                     <span
-                      key={i}
-                      className="text-sm text-gray-300 flex items-center"
+                      className={`px-3 py-1 rounded text-sm font-bold ${
+                        milestone.completed
+                          ? "bg-emerald-900/60 text-emerald-300 border border-emerald-600"
+                          : "bg-gray-800 text-gray-400 border border-gray-700"
+                      }`}
                     >
-                      <span className="text-emerald-500 mr-1">»</span> {skill}
+                      {milestone.completed ? "UNLOCKED" : "LOCKED"}
                     </span>
-                  ))}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    {milestone.skills.map((skill, i) => (
+                      <span
+                        key={i}
+                        className="text-sm text-gray-300 flex items-center"
+                      >
+                        <span className="text-emerald-500 mr-1">»</span> {skill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </foreignObject>
-          );
-        }
+              </foreignObject>
+            );
+          }
+        });
       });
-    });
+    }
 
     return tooltips;
   };
@@ -467,7 +578,7 @@ const RoadmapSection = () => {
 
   return (
     <section
-      className="overflow-hidden py-8 flex-grow md:px-40 mx-auto "
+      className="overflow-hidden py-8 flex-grow md:px-40 mx-auto"
       id="roadmap"
       ref={containerRef}
     >
@@ -478,24 +589,20 @@ const RoadmapSection = () => {
           </h2>
         </div>
 
-        {/* Category Filters */}
         {renderFilters()}
 
-        {/* Roadmap SVG visualization */}
         <div className="relative overflow-x-auto">
           <svg
             className="w-full"
             viewBox={`0 0 ${dimensions.svgWidth} ${dimensions.svgHeight}`}
             preserveAspectRatio="xMidYMid meet"
           >
-            {/* Render all tracks based on device orientation */}
             {Object.keys(processedData).map((trackNum, index) =>
               isMobile
                 ? renderMobileTrack(trackNum, index)
                 : renderDesktopTrack(trackNum, index)
             )}
 
-            {/* Render all tooltips on top */}
             {renderTooltips()}
           </svg>
         </div>
