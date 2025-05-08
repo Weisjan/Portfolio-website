@@ -149,10 +149,12 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex flex-col items-center">
               <div className="relative mb-4">
-                <div className="h-64 w-64 border-4 border-emerald-500 rounded-full overflow-hidden flex items-center justify-center bg-emerald-900 relative">
-                  <span className="text-4xl text-emerald-300 font-mono">
-                    JW
-                  </span>
+                <div className="h-64 w-64 border-4 border-emerald-700 rounded-full overflow-hidden flex items-center justify-centerrelative">
+                  <img
+                    src="../home_images/avatar.jpg"
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
                   <div
                     className={`absolute inset-0 border-4 border-transparent rounded-full ${animationClasses.pulseBorder}`}
                   ></div>
