@@ -259,7 +259,7 @@ const About = () => {
                     <div className="h-2 bg-emerald-900 rounded-full overflow-hidden">
                       <div
                         className={`h-full bg-emerald-500 rounded-full group-hover:${animationClasses.skillBar}`}
-                        style={{ width: `${70 + Math.random() * 25}%` }}
+                        style={{ width: `${70 + Math.random() * 10}%` }}
                       ></div>
                     </div>
                     <div className="mt-1 text-xs text-emerald-600 font-mono">
