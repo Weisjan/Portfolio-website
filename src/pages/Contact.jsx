@@ -193,22 +193,36 @@ const Contact = () => {
         <div>
           <form
             onSubmit={handleSubmit}
-            className="bg-gray-800 p-6 rounded-lg shadow-md"
+            className="bg-black border border-emerald-500 p-6 rounded-lg shadow-lg relative overflow-hidden"
+            style={{
+              boxShadow:
+                "0 0 15px rgba(16, 185, 129, 0.5), 0 0 30px rgba(5, 150, 105, 0.3)",
+              backgroundImage:
+                "linear-gradient(to bottom right, rgba(8, 8, 12, 0.95), rgba(3, 7, 18, 0.98))",
+            }}
           >
             {formStatus.submitted && (
               <div
-                className={`mb-6 p-4 rounded ${
+                className={`mb-6 p-4 rounded border ${
                   formStatus.success
-                    ? "bg-green-900 text-green-200"
-                    : "bg-red-900 text-red-200"
+                    ? "bg-black border-emerald-400 text-emerald-400"
+                    : "bg-black border-red-400 text-red-400"
                 }`}
+                style={{
+                  textShadow: formStatus.success
+                    ? "0 0 8px rgba(52, 211, 153, 0.6)"
+                    : "0 0 8px rgba(248, 113, 113, 0.6)",
+                }}
               >
                 {formStatus.message}
               </div>
             )}
 
             <div className="mb-4">
-              <label htmlFor="name" className="block text-emerald-300 mb-2">
+              <label
+                htmlFor="name"
+                className="block text-emerald-400 mb-2 tracking-wider text-sm"
+              >
                 Name
               </label>
               <input
@@ -217,13 +231,17 @@ const Contact = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-white"
+                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100"
                 required
+                style={{ boxShadow: "inset 0 0 6px rgba(16, 185, 129, 0.3)" }}
               />
             </div>
 
             <div className="mb-4">
-              <label htmlFor="email" className="block text-emerald-300 mb-2">
+              <label
+                htmlFor="email"
+                className="block text-emerald-400 mb-2 tracking-wider text-sm"
+              >
                 Email
               </label>
               <input
@@ -232,13 +250,17 @@ const Contact = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-white"
+                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100"
                 required
+                style={{ boxShadow: "inset 0 0 6px rgba(16, 185, 129, 0.3)" }}
               />
             </div>
 
             <div className="mb-4">
-              <label htmlFor="subject" className="block text-emerald-300 mb-2">
+              <label
+                htmlFor="subject"
+                className="block text-emerald-400 mb-2 tracking-wider text-sm"
+              >
                 Subject
               </label>
               <input
@@ -247,13 +269,17 @@ const Contact = () => {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-white"
+                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100"
                 required
+                style={{ boxShadow: "inset 0 0 6px rgba(16, 185, 129, 0.3)" }}
               />
             </div>
 
             <div className="mb-6">
-              <label htmlFor="message" className="block text-emerald-300 mb-2">
+              <label
+                htmlFor="message"
+                className="block text-emerald-400 mb-2 tracking-wider text-sm"
+              >
                 Message
               </label>
               <textarea
@@ -262,14 +288,16 @@ const Contact = () => {
                 value={formData.message}
                 onChange={handleChange}
                 rows="5"
-                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-white"
+                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100"
                 required
+                style={{ boxShadow: "inset 0 0 6px rgba(16, 185, 129, 0.3)" }}
               ></textarea>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-emerald-600 text-white py-3 px-4 rounded-md hover:bg-emerald-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-opacity-50"
+              className="w-full bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-3 px-4 rounded-md hover:from-emerald-600 hover:to-emerald-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900 tracking-wider"
+              style={{ textShadow: "0 0 5px rgba(16, 185, 129, 0.8)" }}
             >
               Send Message
             </button>
