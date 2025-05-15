@@ -10,6 +10,8 @@ import {
   BookOpen,
   Award,
   GitBranch,
+  FileText,
+  ExternalLink,
 } from "lucide-react";
 
 const About = () => {
@@ -19,8 +21,7 @@ const About = () => {
   const [typeIndex, setTypeIndex] = useState(0);
 
   const fullBio =
-    "I'm a passionate software engineer with 2+ years of experience creating engaging digital experiences. I specialize in building modern web applications using React, Node.js, and related technologies. Based in Gdańsk, I enjoy turning complex problems into simple, beautiful, and intuitive solutions. When I'm not coding, you can find me at rock concerts, playing chess, or experimenting with new recipes.";
-
+    "I'm a software engineer based in Gdańsk with a background in engineering, big data, and medical software development. I specialize in building practical, clean, and user-focused applications using Python, C++, and modern web technologies. I'm especially passionate about machine learning and systems that solve meaningful problems. Outside of work, I play guitar in a band, compete over chessboards, and explore the Japanese language.";
   // Glitch effect
   useEffect(() => {
     const chars =
@@ -73,18 +74,19 @@ const About = () => {
     {
       title: "Early Beginnings",
       description:
-        "Started my journey in web development by creating simple websites and learning the fundamentals of HTML, CSS, and JavaScript.",
+        "Started my journey in web development by building simple websites and learning the basics of HTML, CSS, and JavaScript.",
       icon: <Code className="text-emerald-400" />,
     },
     {
-      title: "Computer Science Degree",
+      title: "Academic Foundation",
       description:
-        "Pursued a degree in Automatic control, Robotics and Cybernetics to deepen my understanding of algorithms, data structures, and software engineering principles.",
+        "Completed a Bachelor's in Automatic Control, Cybernetics, and Robotics, followed by a Master's in Informatics and Econometrics with a focus on Big Data and Decision Systems.",
       icon: <BookOpen className="text-emerald-400" />,
     },
     {
-      title: "Professional Career",
-      description: "Gained hands on experience working as a software engineer.",
+      title: "Professional Experience",
+      description:
+        "Worked as a software engineer at Antrez Medical Software, developing, testing, and deploying solutions in Python and C++ for the OpenCare system.",
       icon: <Award className="text-emerald-400" />,
     },
   ];
@@ -102,7 +104,7 @@ const About = () => {
   ];
 
   const softSkills = [
-    { name: "Project Management & Team Leadership", icon: <User /> },
+    { name: "Project Management & Teamwork", icon: <User /> },
     { name: "Problem Solving & Critical Thinking", icon: <Cpu /> },
     { name: "Clear Communication & Documentation", icon: <Network /> },
     { name: "Continuous Learning & Adaptability", icon: <BookOpen /> },
@@ -187,6 +189,26 @@ const About = () => {
                 <div className="mt-4 flex items-center justify-between text-xs text-emerald-500">
                   <div>LOCATION: GDAŃSK</div>
                   <div>STATUS: FUNCTIONAL</div>
+                </div>
+              </div>
+
+              {/* CV Button */}
+              <div className="flex justify-center  rounded">
+                <div className="flex justify-center mt-8">
+                  <a
+                    href="https://janweis-cv.netlify.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative flex items-center justify-center"
+                  >
+                    <div className="absolute inset-0 bg-emerald-500 opacity-20 blur-sm rounded group-hover:opacity-30 group-hover:blur-md transition-all duration-300"></div>
+                    <button className="bg-black border-2 border-emerald-500 text-emerald-400 font-mono py-2 px-6 rounded flex items-center gap-2 relative overflow-hidden group-hover:bg-emerald-900 group-hover:bg-opacity-20 transition-all duration-300">
+                      <FileText size={16} className="text-emerald-500" />
+                      <span>VIEW DETAILED CV</span>
+                      <ExternalLink size={14} className="ml-1" />
+                      <div className="absolute bottom-0 left-0 h-0.5 w-full bg-emerald-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                    </button>
+                  </a>
                 </div>
               </div>
             </div>
