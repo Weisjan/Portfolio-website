@@ -151,7 +151,7 @@ const About = () => {
               <div className="relative mb-4">
                 <div className="h-64 w-64 border-4 border-emerald-700 rounded-full overflow-hidden flex items-center justify-centerrelative">
                   <img
-                    src="../home_images/avatar.jpg"
+                    src="../home_images/avatar2.jpg"
                     alt="Profile"
                     className="w-full h-full object-cover"
                   />
