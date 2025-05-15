@@ -85,8 +85,25 @@ const Footer = () => {
     };
   }, []);
 
+  useEffect(() => {
+    document.documentElement.style.height = "100%";
+    document.body.style.height = "100%";
+    document.body.style.display = "flex";
+    document.body.style.flexDirection = "column";
+
+    const mainContent =
+      document.getElementById("root") || document.getElementById("__next");
+    if (mainContent) {
+      mainContent.style.flexGrow = "1";
+      mainContent.style.display = "flex";
+      mainContent.style.flexDirection = "column";
+    }
+
+    return () => {};
+  }, []);
+
   return (
-    <footer className="relative py-6  overflow-hidden">
+    <footer className="relative py-6 mt-auto overflow-hidden">
       {/* Wave canvas background */}
       <canvas
         ref={canvasRef}
