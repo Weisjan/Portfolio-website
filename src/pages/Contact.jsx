@@ -12,6 +12,7 @@ const Contact = () => {
     submitted: false,
     success: false,
     message: "",
+    loading: false,
   });
 
   const handleChange = (e) => {
@@ -22,25 +23,76 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // In a real application, this would connect to a backend API
-    console.log("Form data submitted:", formData);
+  const handleSubmit = async () => {
+    // Validate required fields
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.subject ||
+      !formData.message
+    ) {
+      setFormStatus({
+        submitted: true,
+        success: false,
+        message: "Please fill in all required fields.",
+        loading: false,
+      });
+      return;
+    }
 
-    // Simulate form submission
+    // Set loading state
     setFormStatus({
-      submitted: true,
-      success: true,
-      message: "Your message has been sent! I will get back to you soon.",
+      submitted: false,
+      success: false,
+      message: "",
+      loading: true,
     });
 
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
+    try {
+      // Send email via backend API
+      const response = await fetch("http://localhost:3001/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setFormStatus({
+          submitted: true,
+          success: true,
+          message:
+            "Your message has been sent successfully! I will get back to you soon.",
+          loading: false,
+        });
+
+        // Reset form
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        setFormStatus({
+          submitted: true,
+          success: false,
+          message: result.error || "Failed to send message. Please try again.",
+          loading: false,
+        });
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+      setFormStatus({
+        submitted: true,
+        success: false,
+        message: "Network error. Please check your connection and try again.",
+        loading: false,
+      });
+    }
   };
 
   return (
@@ -127,7 +179,7 @@ const Contact = () => {
               </div>
               <div className="ml-3 text-gray-300">
                 <p className="font-medium">Availability</p>
-                <p>Monday - Friday: 9am - 5pm PST</p>
+                <p>Monday - Friday: 9am - 5pm CET</p>
               </div>
             </div>
           </div>
@@ -191,8 +243,7 @@ const Contact = () => {
         </div>
 
         <div>
-          <form
-            onSubmit={handleSubmit}
+          <div
             className="bg-black border border-emerald-500 p-6 rounded-lg shadow-lg relative overflow-hidden"
             style={{
               boxShadow:
@@ -231,7 +282,8 @@ const Contact = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100"
+                disabled={formStatus.loading}
+                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100 disabled:opacity-50"
                 required
                 style={{ boxShadow: "inset 0 0 6px rgba(16, 185, 129, 0.3)" }}
               />
@@ -250,7 +302,8 @@ const Contact = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100"
+                disabled={formStatus.loading}
+                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100 disabled:opacity-50"
                 required
                 style={{ boxShadow: "inset 0 0 6px rgba(16, 185, 129, 0.3)" }}
               />
@@ -269,7 +322,8 @@ const Contact = () => {
                 name="subject"
                 value={formData.subject}
                 onChange={handleChange}
-                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100"
+                disabled={formStatus.loading}
+                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100 disabled:opacity-50"
                 required
                 style={{ boxShadow: "inset 0 0 6px rgba(16, 185, 129, 0.3)" }}
               />
@@ -288,20 +342,49 @@ const Contact = () => {
                 value={formData.message}
                 onChange={handleChange}
                 rows="5"
-                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100"
+                disabled={formStatus.loading}
+                className="w-full px-4 py-2 bg-gray-900 border border-emerald-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 text-emerald-100 disabled:opacity-50"
                 required
                 style={{ boxShadow: "inset 0 0 6px rgba(16, 185, 129, 0.3)" }}
               ></textarea>
             </div>
 
             <button
-              type="submit"
-              className="w-full bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-3 px-4 rounded-md hover:from-emerald-600 hover:to-emerald-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900 tracking-wider"
+              type="button"
+              onClick={handleSubmit}
+              disabled={formStatus.loading}
+              className="w-full bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-3 px-4 rounded-md hover:from-emerald-600 hover:to-emerald-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-gray-900 tracking-wider disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
               style={{ textShadow: "0 0 5px rgba(16, 185, 129, 0.8)" }}
             >
-              Send Message
+              {formStatus.loading ? (
+                <>
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Sending...
+                </>
+              ) : (
+                "Send Message"
+              )}
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </div>

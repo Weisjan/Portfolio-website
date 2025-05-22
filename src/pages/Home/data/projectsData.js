@@ -1,66 +1,25 @@
 const projectsData = [
   {
     id: 1,
-    title: "E-commerce Platform",
+    title: "Address Browser",
     description:
-      "A fully functional online store with payment processing and inventory management",
-    tech: ["React", "Node.js", "MongoDB", "Stripe"],
+      "full-stack web application for browsing hierarchical Polish address data",
+    tech: ["PostgreSQL", "Fastapi", "React", "Tailwind CSS", "Node.js"],
     demo: "https://example.com/demo",
     source: "https://github.com/Weisjan/Address-browser",
     detailedDescription:
-      "This e-commerce platform features real-time inventory tracking, secure payment processing with Stripe integration, and a responsive admin dashboard. It includes features like user authentication, shopping cart functionality, order history, and product reviews.",
+      "Address Browser is a full-stack web application for querying hierarchical address data from Polish public services (GUGiK). The application features a Python-based backend (FastAPI), a PostgreSQL database for relational data storage, and a modern React frontend for an intuitive user experience.",
     images: [
       "/projects_images/addres_search_1.png",
       "/projects_images/addres_search_2.png",
       "/projects_images/addres_search_3.png",
     ],
     features: [
-      "User authentication & profiles",
-      "Product search & filtering",
-      "Shopping cart & checkout",
-      "Payment processing",
-      "Order tracking & history",
-      "Admin dashboard",
-    ],
-  },
-  {
-    id: 2,
-    title: "Portfolio Website",
-    description:
-      "A personal portfolio showcasing skills and projects with modern design",
-    tech: ["React", "Tailwind CSS", "Framer Motion", "TypeScript"],
-    demo: "https://example.com/demo",
-    source: "https://github.com/Weisjan/Address-browser",
-    detailedDescription:
-      "This portfolio website features smooth animations, responsive design, and a modern user interface. It includes sections for showcasing projects, skills, and contact information. The site is optimized for performance and accessibility.",
-    images: ["/home_images/2.jpg", "/home_images/3.jpg", "/home_images/4.jpg"],
-    features: [
-      "Responsive design",
-      "Custom animations",
-      "Dark/light mode",
-      "Project showcase",
-      "Skills section",
-      "Contact form",
-    ],
-  },
-  {
-    id: 3,
-    title: "Portfolio test",
-    description:
-      "A personal portfolio showcasing skills and projects with modern design",
-    tech: ["React", "Tailwind CSS", "Framer Motion", "NextJS", "MongoDB"],
-    demo: "https://example.com/demo",
-    source: "https://github.com/Weisjan/Address-browser",
-    detailedDescription:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    images: ["/home_images/2.jpg", "/home_images/3.jpg", "/home_images/4.jpg"],
-    features: [
-      "Responsive design",
-      "Custom animations",
-      "Dark/light mode",
-      "Project showcase",
-      "Skills section",
-      "Contact form",
+      "Integration with GUGiK SOAP API for hierarchical address data retrieval",
+      "Relational database schema using PostgreSQL",
+      "FastAPI backend exposing a REST API for querying address data",
+      "React-based frontend with live search and filter functionality",
+      "Modular component architecture with Vite-based development workflow",
     ],
   },
 ];
@@ -77,6 +36,8 @@ export const getTechBadgeColor = (techName) => {
     TypeScript: "bg-blue-600/20 text-blue-300 border-blue-600/40",
     NextJS: "bg-black/40 text-gray-300 border-gray-500/40",
     default: "bg-emerald-500/20 text-emerald-300 border-emerald-500/40",
+    PostgreSQL: "bg-orange-500/20 text-orange-300 border-orange-500/40",
+    Fastapi: "bg-blue-600/20 text-blue-400 border-blue-600/40",
   };
 
   return techColors[techName] || techColors.default;
