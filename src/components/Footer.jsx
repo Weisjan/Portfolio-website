@@ -15,7 +15,7 @@ const Footer = () => {
     const waveGradients = [
       [
         { offset: 0, color: "#059669" }, // Emerald 600
-        { offset: 0.1, color: "#047857" }, // Emerald 700
+        { offset: 0.6, color: "#047857" }, // Emerald 700
         { offset: 1, color: "#111827" }, // Gray 900
       ],
       [
